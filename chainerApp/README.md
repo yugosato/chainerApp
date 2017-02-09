@@ -1,36 +1,36 @@
 
-ConvNet‚É‰æ‘œƒf[ƒ^ƒZƒbƒg(3ƒ`ƒƒƒ“ƒlƒ‹‰æ‘œ)‚ðŠwK‚³‚¹‚éƒR[ƒh
+ConvNetã«ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ(3ãƒãƒ£ãƒ³ãƒãƒ«ç”»åƒ)ã‚’å­¦ç¿’ã•ã›ã‚‹ã‚³ãƒ¼ãƒ‰
 
 
->> Žg—p•û–@(€”õ•Ò)
+>> ä½¿ç”¨æ–¹æ³•(æº–å‚™ç·¨)
 
-==== ŠwK‚ðŽn‚ß‚é‘O‚ÉAƒf[ƒ^ƒZƒbƒg‰æ‘œ‚Æƒ‰ƒxƒ‹‚ÌƒŠƒXƒg(Caffe€‹’)‚ðŠwK—p‚ÆŒŸØ—p‚»‚ê‚¼‚êì¬
+==== å­¦ç¿’ã‚’å§‹ã‚ã‚‹å‰ã«ã€ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆç”»åƒã¨ãƒ©ãƒ™ãƒ«ã®ãƒªã‚¹ãƒˆ(Caffeæº–æ‹ )ã‚’å­¦ç¿’ç”¨ã¨æ¤œè¨¼ç”¨ãã‚Œãžã‚Œä½œæˆ
 
-ƒRƒ}ƒ“ƒh--> python make_list.py '(ŠwK/ŒŸØ ‰æ‘œƒtƒHƒ‹ƒ_‚Ö‚ÌƒpƒX)'
+ã‚³ãƒžãƒ³ãƒ‰--> python make_list.py '(å­¦ç¿’/æ¤œè¨¼ ç”»åƒãƒ•ã‚©ãƒ«ãƒ€ã¸ã®ãƒ‘ã‚¹)'
 
 (ex)image_list_train.txt
-~\LFW-Dataset\lfw\Aaron_Eckhart\Aaron_Eckhart_0001.jpg 0
-~\LFW-Dataset\lfw\Aaron_Guiel\Aaron_Guiel_0001.jpg 1
+    /home/yugo/LFW-Dataset/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg 0
+/home/yugo/LFW-Dataset/lfw/Aaron_Guiel/Aaron_Guiel_0001.jpg 1
 
 
->> Žg—p•û–@(ŠwK•Ò)
+>> ä½¿ç”¨æ–¹æ³•(å­¦ç¿’ç·¨)
 
-ƒRƒ}ƒ“ƒh--> python main.py 'image_list_train.txt' 'image_list_test.txt'
-‚ÅŠwKŠJŽn(ŠwKI—¹ŒãAŠwKÏ‚Ýƒ‚ƒfƒ‹EƒƒO‚ªo—Í‚³‚ê‚é)
+ã‚³ãƒžãƒ³ãƒ‰--> python main.py 'image_list_train.txt' 'image_list_test.txt'
+ã§å­¦ç¿’é–‹å§‹(å­¦ç¿’çµ‚äº†å¾Œã€å­¦ç¿’æ¸ˆã¿ãƒ¢ãƒ‡ãƒ«ãƒ»ãƒ­ã‚°ãŒå‡ºåŠ›ã•ã‚Œã‚‹)
 
 
-ŠeŽí•Ï”ƒIƒvƒVƒ‡ƒ“ ¦()‚ÍƒfƒtƒHƒ‹ƒg’l
-ƒRƒ}ƒ“ƒh--> python main.py --help
+å„ç¨®å¤‰æ•°ã‚ªãƒ—ã‚·ãƒ§ãƒ³ â€»()ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+ã‚³ãƒžãƒ³ãƒ‰--> python main.py --help
 
---arch, -a           #ƒlƒbƒgƒ[ƒNƒ‚ƒfƒ‹ ('nin')
---epoch, -E          #ŠwK‰ñ” (10)
---batchsize, -B      #ƒ~ƒjƒoƒbƒ`ƒTƒCƒY-ŠwK (32)
---test_batchsize, -b #ƒ~ƒjƒoƒbƒ`ƒTƒCƒY-ŒŸØ (250)
+--arch, -a           #ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãƒ¢ãƒ‡ãƒ« ('nin')
+--epoch, -E          #å­¦ç¿’å›žæ•° (10)
+--batchsize, -B      #ãƒŸãƒ‹ãƒãƒƒãƒã‚µã‚¤ã‚º-å­¦ç¿’ (32)
+--test_batchsize, -b #ãƒŸãƒ‹ãƒãƒƒãƒã‚µã‚¤ã‚º-æ¤œè¨¼ (250)
 --gpu, -g            #CPUorGPU (-1)
---loaderjob, -j      #•À—ñŽÀs” (none)
---mean, -m           #•½‹Ï‰æ‘œ ('mean.npy')
---root, -R           #ƒf[ƒ^ƒZƒbƒgƒtƒHƒ‹ƒ_ ('.')
---out, -o            #Œ‹‰Êo—ÍƒtƒHƒ‹ƒ_ ('result')
+--loaderjob, -j      #ä¸¦åˆ—å®Ÿè¡Œæ•° (none)
+--mean, -m           #å¹³å‡ç”»åƒ ('mean.npy')
+--root, -R           #ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆãƒ•ã‚©ãƒ«ãƒ€ ('.')
+--out, -o            #çµæžœå‡ºåŠ›ãƒ•ã‚©ãƒ«ãƒ€ ('result')
 
-(ex)googlenet‚ÌŠwK‚ðGPU‚Å‰ñ‚·ê‡
-ƒRƒ}ƒ“ƒh--> python main.py 'image_list_train.txt' 'image_list_test.txt' -a googlenet -g 0
+(ex)googlenetã®å­¦ç¿’ã‚’GPUã§å›žã™å ´åˆ
+ã‚³ãƒžãƒ³ãƒ‰--> python main.py 'image_list_train.txt' 'image_list_test.txt' -a googlenet -g 0
