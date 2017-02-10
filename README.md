@@ -1,4 +1,4 @@
 # chainerApp
 Sample programs using Chainer  
 * Python 2.7.13  
-* Chainer 1.20.1
+* Chainer 1.20.0.1
