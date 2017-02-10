@@ -2,11 +2,11 @@
 ###ConvNetに画像データセット（3チャンネル画像）を学習させるコード
 
 * 使用方法（準備編）  
-学習を始める前に、データセット画像とラベルのリスト（Caffe準拠）を学習用と検証用それぞれ作成  
-コマンド `python make_list.py '(学習/検証 画像フォルダへのパス)'`  
+学習を始める前に、データセット画像とラベルのリスト（Caffe準拠）を学習用と検証用それぞれ作成  
+``python make_list.py '(学習/検証 画像フォルダへのパス)'``  
 (ex) image_list_train.txt  
-/home/yugo/LFW-Dataset/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg 0  
-/home/yugo/LFW-Dataset/lfw/Aaron_Guiel/Aaron_Guiel_0001.jpg 1
+``/home/yugo/LFW-Dataset/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg 0``  
+``/home/yugo/LFW-Dataset/lfw/Aaron_Guiel/Aaron_Guiel_0001.jpg 1``
 
 * 使用方法（学習編）  
 コマンド `python main.py 'image_list_train.txt' 'image_list_test.txt'`  
