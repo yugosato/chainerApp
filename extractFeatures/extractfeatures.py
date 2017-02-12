@@ -6,14 +6,13 @@ import sys
 import cPickle as pickle
 import numpy as np
 from chainer import cuda
-from make_list import PreprocessedDataset
+from dataset import PreprocessedDataset
 
 
 xp = cuda.cupy
 
 
-def main():
-    
+def main():    
     parser = argparse.ArgumentParser(description='Extract features from trained convnet model (only 3 channels image)')
     parser.add_argument('test', help='Path to test image-label list file')
     parser.add_argument('trainedmodel', help='Trainedmodel for extacting features')                

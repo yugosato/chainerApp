@@ -7,6 +7,7 @@ import chainer.links as L
 
 
 class MyModel(Chain):
+    
     insize = 224
     
     def __init__(self):

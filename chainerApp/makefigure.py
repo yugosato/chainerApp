@@ -5,8 +5,7 @@ import json
 import os
 
 
-def logplot(out, logname='log'):
-    
+def logplot(out, logname='log'):    
     try:
         os.makedirs(out)
     except OSError:

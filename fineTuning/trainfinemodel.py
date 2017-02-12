@@ -1,44 +1,29 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np
 import argparse
 import os
 import time
 import datetime
-
+import cPickle as pickle
 import chainer
 from chainer import training
 from chainer.training import extensions
-
-from make_list import PreprocessedDataset
-from make_figure import logplot
-
+from dataset import PreprocessedDataset
+from makefigure import logplot
 import mymodel
-import nin
-import alex
-import lenet5
-import vgg16
-import googlenet
-import deepface
 
 
-def train():
-    
+def train():    
     archs = {
         'mymodel': mymodel.MyModel,
-        'nin': nin.NIN,
-        'alex': alex.Alex,
-        'lenet': lenet5.Lenet5,
-        'vgg': vgg16.VGG16,
-        'googlenet': googlenet.GoogLeNet,
-        'deepface': deepface.DeepFace
     }
     
     
-    parser = argparse.ArgumentParser(description='Training convnet from dataset (only 3 channels image)')
+    parser = argparse.ArgumentParser(description='Training fine-tuned convnet from dataset (only 3 channels image)')
     parser.add_argument('train', help='Path to training image-label list file')
     parser.add_argument('test', help='Path to test image-label list file')
-    parser.add_argument('--arch', '-a', choices=archs.keys(), default='nin',
+    parser.add_argument('basemodel', help='Basemodel for fine-tuning')  
+    parser.add_argument('--arch', '-a', choices=archs.keys(), default='mymodel',
                         help='Convnet architecture')
     parser.add_argument('--epoch', '-E', type=int, default=10,
                         help='Number of epochs to train')
@@ -49,7 +34,7 @@ def train():
     parser.add_argument('--gpu', '-g', type=int, default=-1,
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--loaderjob', '-j', type=int,
-                        help='Number of parallel data loading processes')
+                        help='Number of parallel data loading processes')                
     parser.add_argument('--root', '-R', default='.',
                         help='Root directory path of image files')  
     parser.add_argument('--out', '-o', default='result',
@@ -64,13 +49,14 @@ def train():
     
 
     # Initialize the model to train
-    model = archs[args.arch]()
+    basemodel = pickle.load(open(os.path.join('trainedmodel', args.basemodel), 'rb'))
+    model = archs[args.arch](basemodel)
     
     if args.gpu >= 0:
         chainer.cuda.get_device(args.gpu).use()
-        model.to_gpu()
-
+        model.to_gpu()    
         
+
     # Load the datasets
     train = PreprocessedDataset(args.train, args.root, model.insize)
     test = PreprocessedDataset(args.test, args.root, model.insize)
@@ -130,3 +116,5 @@ def train():
     info.write('----> Total training time: {}.'.format(total_time))
     
     
+if __name__ == '__main__':
+    train()

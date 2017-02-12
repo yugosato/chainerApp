@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import math
-
 import chainer
 from chainer import Chain
 import chainer.functions as F

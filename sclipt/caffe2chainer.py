@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from chainer.functions import caffe
-
 import cPickle as pickle
 import argparse
 import os
@@ -13,11 +12,10 @@ def extractFilename(path):
     return fname
 
     
-def main():
-    
+def main():    
     parser = argparse.ArgumentParser(description='Convert caffemodel to chainermodel')
     parser.add_argument('model', help='Path to caffemodel')
-    parser.add_argument('--out', '-o', default='trainedmodel', help='Output directory')
+    parser.add_argument('--out', '-o', default='chainermodel', help='Output directory')
     args = parser.parse_args()
     
 
@@ -29,7 +27,7 @@ def main():
     
     caffemodel = caffe.CaffeFunction(args.model)
     modelname = extractFilename(args.model)
-    pickle.dump(caffemodel, open(os.path.join(args.out, modelname), 'wb'), -1)
+    pickle.dump(caffemodel, open(os.path.join(args.out, modelname + '.pkl'), 'wb'), -1)
 
     
 if __name__ == '__main__':
