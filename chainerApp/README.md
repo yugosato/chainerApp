@@ -4,7 +4,7 @@
 学習を始める前に、データセット画像パス・ラベルのリストを学習用と検証用それぞれ作成  
 作業ディレクトリへコピー
 ```
-$ cd sclipt
+$ cd script
 $ python makelist.py "(学習/検証 画像フォルダへのパス)"  
 $ cp image_list_train.txt chainerApp
 ```
