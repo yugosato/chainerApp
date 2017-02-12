@@ -16,7 +16,7 @@ $ cp image_list_train.txt chainerApp
 ```
 
 ####使用方法（学習）  
-作業ディレクトリにて
+作業ディレクトリで
 ```
 $ python trainmodel.py "image_list_train.txt" "image_list_test.txt"
 ```
