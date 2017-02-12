@@ -12,8 +12,7 @@ class Alex(Chain):
     Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton
     NIPS2012
     '''
-    insize = 227
-    
+    insize = 227    
     
     def __init__(self):
         super(Alex, self).__init__(

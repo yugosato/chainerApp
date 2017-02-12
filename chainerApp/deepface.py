@@ -13,7 +13,6 @@ class DeepFace(Chain):
     CVPR2014
     '''
     insize = 152
-
     
     def __init__(self):
         super(DeepFace, self).__init__(

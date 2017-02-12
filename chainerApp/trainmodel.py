@@ -28,8 +28,7 @@ def train():
         'vgg': vgg16.VGG16,
         'googlenet': googlenet.GoogLeNet,
         'deepface': deepface.DeepFace
-    }
-    
+    }    
     
     parser = argparse.ArgumentParser(description='Training convnet from dataset (only 3 channels image)')
     parser.add_argument('train', help='Path to training image-label list file')
@@ -50,14 +49,12 @@ def train():
                         help='Root directory path of image files')  
     parser.add_argument('--out', '-o', default='result',
                         help='Output directory')
-    args = parser.parse_args()
-    
+    args = parser.parse_args()    
    
     print 'GPU: {}'.format(args.gpu)
     print '# Minibatch-size: {}'.format(args.batchsize)
     print '# epoch: {}'.format(args.epoch)
-    print ''
-    
+    print ''    
 
     # Initialize the model to train
     model = archs[args.arch]()
@@ -65,36 +62,30 @@ def train():
     if args.gpu >= 0:
         chainer.cuda.get_device(args.gpu).use()
         model.to_gpu()
-
         
     # Load the datasets
     train = PreprocessedDataset(args.train, args.root, model.insize)
     test = PreprocessedDataset(args.test, args.root, model.insize)
-    
-    
+        
     # These iterators load the images with subprocesses running in parallel to
     # the training/validation.
     train_iter = chainer.iterators.MultiprocessIterator(
         train, args.batchsize, n_processes=args.loaderjob)
     test_iter = chainer.iterators.MultiprocessIterator(
         test, args.test_batchsize, repeat=False, shuffle=False, n_processes=args.loaderjob)  
-    
-    
+        
     # Set up an optimizer
     optimizer = chainer.optimizers.MomentumSGD(lr=0.01, momentum=0.9)
     optimizer.setup(model)
-    
-    
+        
     # Set up a trainer                                       
     updater = training.StandardUpdater(train_iter, optimizer, device=args.gpu)
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), args.out)
-
     
     # Copy the chain with shared parameters to flip 'train' flag only in test
     eval_model = model.copy()
     eval_model.train = False
-    
-     
+         
     trainer.extend(extensions.Evaluator(test_iter, eval_model, device=args.gpu))
     trainer.extend(extensions.LogReport())
     trainer.extend(extensions.PrintReport([
@@ -108,8 +99,7 @@ def train():
     start_time = time.clock()
     trainer.run() 
     total_time = datetime.timedelta(seconds = time.clock() - start_time)
-    
-    
+        
     # Save the trained model
     print ''
     print 'Training has been finished.'
@@ -117,8 +107,7 @@ def train():
     print 'Saving the trained model...',
     chainer.serializers.save_npz(os.path.join(args.out, 'model_final_' + args.arch), model)
     print '----> done'
-    
-    
+        
     logplot(args.out)    
     
     info = open(os.path.join(args.out, 'info'), 'a')

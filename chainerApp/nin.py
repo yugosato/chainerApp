@@ -13,8 +13,7 @@ class NIN(Chain):
     Min Lin, Qiang Chen, Shuicheng Yan
     ICLR2014
     '''
-    insize = 227
-  
+    insize = 227      
     
     def __init__(self):
         w = math.sqrt(2)  # MSRA scaling

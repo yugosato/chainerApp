@@ -13,7 +13,6 @@ class VGG16(Chain):
     ICLR2015
     '''
     insize = 224
-
     
     def __init__(self):
         super(VGG16, self).__init__(

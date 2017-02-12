@@ -13,7 +13,6 @@ class Lenet5(Chain):
     Proc. of the IEEE 1998
     '''
     insize = 152
-
     
     def __init__(self):
         super(Lenet5, self).__init__(

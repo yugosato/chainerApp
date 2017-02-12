@@ -9,8 +9,7 @@ def logplot(out, logname='log'):
     try:
         os.makedirs(out)
     except OSError:
-        pass
-    
+        pass    
         
     jsondata = open(os.path.join(out, logname), 'r')
     jsondata = json.load(jsondata)
@@ -24,7 +23,6 @@ def logplot(out, logname='log'):
         loss.append(data['validation/main/loss'])
         acc.append(data['validation/main/accuracy'])
     
-
     plt.figure(1)
     plt.plot(epoch, loss, '-b')
     plt.xlim(0, len(epoch))
@@ -39,4 +37,4 @@ def logplot(out, logname='log'):
     plt.xlabel('epoch')
     plt.ylabel('accuracy')
     plt.grid()
-    plt.savefig(os.path.join(out, 'accuracy.png'))    
+    plt.savefig(os.path.join(out, 'accuracy.png'))

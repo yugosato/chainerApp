@@ -16,14 +16,12 @@ def main():
     parser = argparse.ArgumentParser(description='Convert caffemodel to chainermodel')
     parser.add_argument('model', help='Path to caffemodel')
     parser.add_argument('--out', '-o', default='chainermodel', help='Output directory')
-    args = parser.parse_args()
-    
+    args = parser.parse_args()    
 
     try:
         os.makedirs(args.out)
     except OSError:
-        pass
-    
+        pass    
     
     caffemodel = caffe.CaffeFunction(args.model)
     modelname = extractFilename(args.model)

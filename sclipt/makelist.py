@@ -23,8 +23,7 @@ class DatasetListFromDirectory(chainer.dataset.DatasetMixin):
                 print input_path
                 if not os.path.isfile(input_path): continue
                             
-                pairs.append((input_path, dir_index))
-   
+                pairs.append((input_path, dir_index))   
                 
         self._pairs = pairs
         self._label_table = label_table

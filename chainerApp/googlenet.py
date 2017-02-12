@@ -13,8 +13,7 @@ class GoogLeNet(Chain):
     Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich
     CVPR2015
     '''
-    insize = 224
-    
+    insize = 224    
     
     def __init__(self):
         super(GoogLeNet, self).__init__(
