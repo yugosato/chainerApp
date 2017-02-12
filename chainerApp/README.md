@@ -3,6 +3,7 @@
 ####使用方法（準備）  
 学習を始める前に、データセット画像とラベルのリスト（Caffe準拠）を学習用と検証用それぞれ作成  
 ```
+$ cd sclipt
 $ python makelist.py "(学習/検証 画像フォルダへのパス)"  
 ```
 （リスト例） image_list_train.txt
