@@ -7,7 +7,7 @@ Sample programs using Chainer
 CNNに画像データセット（3チャンネル画像）を学習させるコード（クラス分類）
 
 ### extractFeatures  
-学習済モデルを使ったた特徴抽出
+学習済モデルを使った特徴抽出
 
 ### fineTuning  
 ファインチューニング用
