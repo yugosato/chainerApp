@@ -1,10 +1,12 @@
 
 ###CNNに画像データセット（3チャンネル画像）を学習させるコード（クラス分類）
 ####使用方法（準備）  
-学習を始める前に、データセット画像とラベルのリスト（Caffe準拠）を学習用と検証用それぞれ作成  
+学習を始める前に、データセット画像パス・ラベルのリストを学習用と検証用それぞれ作成  
+作業ディレクトリへコピー
 ```
 $ cd sclipt
 $ python makelist.py "(学習/検証 画像フォルダへのパス)"  
+$ cp image_list_train.txt chainerApp
 ```
 （リスト例） image_list_train.txt
 ```
@@ -13,7 +15,8 @@ $ python makelist.py "(学習/検証 画像フォルダへのパス)"
 :
 ```
 
-####使用方法（学習）  
+####使用方法（学習）  
+作業ディレクトリにて
 ```
 $ python trainmodel.py "image_list_train.txt" "image_list_test.txt"
 ```
