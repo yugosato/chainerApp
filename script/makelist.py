@@ -10,6 +10,7 @@ class DatasetListFromDirectory(chainer.dataset.DatasetMixin):
     
     def __init__(self, root='.'):
         directories = os.listdir(root)
+	directories.sort()	
         label_table = []
         pairs = []
         for dir_index, directory in enumerate(directories):
@@ -18,7 +19,9 @@ class DatasetListFromDirectory(chainer.dataset.DatasetMixin):
            
             label_table.append((dir_index, directory))
             
-            for file_name in os.listdir(full_dir_path):
+	    files = os.listdir(full_dir_path)
+	    files.sort()
+            for file_name in files:
                 input_path = os.path.join(full_dir_path, file_name)
                 print input_path
                 if not os.path.isfile(input_path): continue
