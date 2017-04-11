@@ -36,13 +36,13 @@ class DatasetListFromDirectory(chainer.dataset.DatasetMixin):
         
 
     def create_label_list(self):
-        with open('label_list.txt', 'w') as f:
+        with open('labels.txt', 'w') as f:
             for (label_index, label_name) in self._label_table:
                 f.write('{} {}\n'.format(label_index, label_name))
                 
     
     def create_image_list(self):
-        with open('image_list.txt', 'w') as f:
+        with open('images.txt', 'w') as f:
             for (input_path, label_index) in self._pairs:
                 f.write('{} {}\n'.format(input_path, label_index))
        
