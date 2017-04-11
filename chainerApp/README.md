@@ -7,9 +7,9 @@
 ```
 $ cd script
 $ python makelist.py "(学習/検証 画像フォルダへのパス)"  
-$ cp image_list_train.txt chainerApp
+$ cp images.txt chainerApp
 ```
-（リスト例） image_list_train.txt
+（リスト例） images.txt
 ```
 /home/yugo/LFW-Dataset/lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg 0  
 /home/yugo/LFW-Dataset/lfw/Aaron_Guiel/Aaron_Guiel_0001.jpg 1
@@ -19,7 +19,7 @@ $ cp image_list_train.txt chainerApp
 #### 使用方法（学習）  
 作業ディレクトリで
 ```
-$ python trainmodel.py "image_list_train.txt" "image_list_test.txt"
+$ python trainmodel.py "images_train.txt" "images_test.txt"
 ```
 で学習開始（学習終了後、学習済みモデル・ログが出力される）
 * オプション
@@ -38,5 +38,5 @@ $ python trainmodel.py "image_list_train.txt" "image_list_test.txt"
 
 （googlenetの学習をGPUで回す場合の例）  
 ```
-$ python trainmodel.py "image_list_train.txt" "image_list_test.txt" -a googlenet -g 0
+$ python trainmodel.py "images_train.txt" "images_test.txt" -a googlenet -g 0
 ```
