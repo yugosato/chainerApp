@@ -27,7 +27,7 @@ def main():
         pass   
 
     # Initialize the model to train
-    model = pickle.load(open(os.path.join('trainedmodel', args.trainedmodel), 'rb'))
+    model = pickle.load(open(args.trainedmodel, 'rb'))
     model.to_gpu()
         
     # Load the datasets
@@ -44,7 +44,7 @@ def main():
         sys.stderr.flush()
         image, label = test.get_example(i)
         x = image.reshape((1,) + image.shape)
-        y = model(inputs={'data': xp.asarray(x)}, outputs=['fc7'], train=False)
+        y = model(inputs={'data': xp.asarray(x)}, outputs=['fc6'], train=False)
         outputs = cuda.to_cpu(y[0].data)
         results.append(outputs[0])
     np.save(os.path.join(args.out, 'features.npy'), results)
