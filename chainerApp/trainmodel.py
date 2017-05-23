@@ -10,6 +10,7 @@ from chainer import training
 from chainer.training import extensions
 from dataset import PreprocessedDataset
 from makefigure import logplot
+
 import mymodel
 import nin
 import alex
@@ -43,8 +44,6 @@ def train():
                         help='Test minibatch size')
     parser.add_argument('--gpu', '-g', type=int, default=-1,
                         help='GPU ID (negative value indicates CPU)')
-    parser.add_argument('--loaderjob', '-j', type=int,
-                        help='Number of parallel data loading processes')
     parser.add_argument('--root', '-R', default='.',
                         help='Root directory path of image files')  
     parser.add_argument('--out', '-o', default='result',
@@ -60,7 +59,7 @@ def train():
     model = archs[args.arch]()
     
     if args.gpu >= 0:
-        chainer.cuda.get_device(args.gpu).use()
+        chainer.cuda.get_device_from_id(args.gpu).use()
         model.to_gpu()
         
     # Load the datasets
@@ -69,10 +68,8 @@ def train():
         
     # These iterators load the images with subprocesses running in parallel to
     # the training/validation.
-    train_iter = chainer.iterators.MultiprocessIterator(
-        train, args.batchsize, n_processes=args.loaderjob)
-    test_iter = chainer.iterators.MultiprocessIterator(
-        test, args.test_batchsize, repeat=False, shuffle=False, n_processes=args.loaderjob)  
+    train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
+    test_iter = chainer.iterators.MultiprocessIterator(test, args.test_batchsize, repeat=False, shuffle=False)
         
     # Set up an optimizer
     optimizer = chainer.optimizers.MomentumSGD(lr=0.01, momentum=0.9)
@@ -108,8 +105,7 @@ def train():
     chainer.serializers.save_npz(os.path.join(args.out, 'model_final_' + args.arch), model)
     print '----> done'
         
-    logplot(args.out)    
-    
+    logplot(args.out)
     info = open(os.path.join(args.out, 'info'), 'a')
     info.write('Date: {}.\n'.format(date.strftime("%Y/%m/%d %H:%M:%S")))
     info.write('----> Total training time: {}.'.format(total_time))

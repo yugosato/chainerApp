@@ -30,7 +30,6 @@ $ python trainmodel.py "images_train.txt" "images_test.txt"
 --batchsize, -B       # ミニバッチサイズ 学習 (default=32)  
 --test_batchsize, -b  # ミニバッチサイズ 検証 (default=250)  
 --gpu, -g             # GPU (default=-1)  
---loaderjob, -j       # 並列実行数 (default=none)  
 --mean, -m            # 平均画像 (default='mean.npy')  
 --root, -R            # データセットディレクトリ (default='.')  
 --out, -o             # 結果出力ディレクトリ (default='result')  
