@@ -55,40 +55,39 @@ def train():
     print '# epoch: {}'.format(args.epoch)
     print ''    
 
-    # Initialize the model to train
+    # Initialize model to train
     model = archs[args.arch]()
     
     if args.gpu >= 0:
         chainer.cuda.get_device_from_id(args.gpu).use()
         model.to_gpu()
         
-    # Load the datasets
+    # Load datasets
     train = PreprocessedDataset(args.train, args.root, model.insize)
     test = PreprocessedDataset(args.test, args.root, model.insize)
         
-    # These iterators load the images with subprocesses running in parallel to
-    # the training/validation.
+    # Set up iterator
     train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
-    test_iter = chainer.iterators.MultiprocessIterator(test, args.test_batchsize, repeat=False, shuffle=False)
+    test_iter = chainer.iterators.SerialIterator(test, args.test_batchsize, repeat=False, shuffle=False)
         
-    # Set up an optimizer
-    optimizer = chainer.optimizers.MomentumSGD(lr=0.01, momentum=0.9)
+    # Set up optimizer
+    optimizer = chainer.optimizers.Adam()
     optimizer.setup(model)
         
-    # Set up a trainer                                       
+    # Set up trainer
     updater = training.StandardUpdater(train_iter, optimizer, device=args.gpu)
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), args.out)
     
-    # Copy the chain with shared parameters to flip 'train' flag only in test
+    # Copy chain with shared parameters to flip 'train' flag only in test
     eval_model = model.copy()
     eval_model.train = False
          
     trainer.extend(extensions.Evaluator(test_iter, eval_model, device=args.gpu))
     trainer.extend(extensions.LogReport())
     trainer.extend(extensions.PrintReport([
-        'epoch', 'iteration', 'main/loss', 'validation/main/loss',
+        'epoch', 'main/loss', 'validation/main/loss',
         'main/accuracy', 'validation/main/accuracy']))
-    trainer.extend(extensions.ProgressBar(update_interval=10))
+    trainer.extend(extensions.ProgressBar())
     
     # Get date and time
     date = datetime.datetime.today()
@@ -97,7 +96,7 @@ def train():
     trainer.run() 
     total_time = datetime.timedelta(seconds = time.clock() - start_time)
         
-    # Save the trained model
+    # Save trained model
     print ''
     print 'Training has been finished.'
     print 'Total training time: {}.'.format(total_time)

@@ -32,8 +32,6 @@ def train():
                         help='Test minibatch size')
     parser.add_argument('--gpu', '-g', type=int, default=-1,
                         help='GPU ID (negative value indicates CPU)')
-    parser.add_argument('--loaderjob', '-j', type=int,
-                        help='Number of parallel data loading processes')                
     parser.add_argument('--root', '-R', default='.',
                         help='Root directory path of image files')  
     parser.add_argument('--out', '-o', default='result',
@@ -45,30 +43,27 @@ def train():
     print '# epoch: {}'.format(args.epoch)
     print ''    
 
-    # Initialize the model to train
+    # Initialize model to train
     basemodel = pickle.load(open(os.path.join('trainedmodel', args.basemodel), 'rb'))
     model = archs[args.arch](basemodel)
     
     if args.gpu >= 0:
-        chainer.cuda.get_device(args.gpu).use()
+        chainer.cuda.get_device_from_id(args.gpu).use()
         model.to_gpu()    
         
-    # Load the datasets
+    # Load datasets
     train = PreprocessedDataset(args.train, args.root, model.insize)
     test = PreprocessedDataset(args.test, args.root, model.insize)
         
-    # These iterators load the images with subprocesses running in parallel to
-    # the training/validation.
-    train_iter = chainer.iterators.MultiprocessIterator(
-        train, args.batchsize, n_processes=args.loaderjob)
-    test_iter = chainer.iterators.MultiprocessIterator(
-        test, args.test_batchsize, repeat=False, shuffle=False, n_processes=args.loaderjob)  
+    # Set up iterator
+    train_iter = chainer.iterators.SerialIterator(train, args.batchsize)
+    test_iter = chainer.iterators.SerialIterator(test, args.test_batchsize, repeat=False, shuffle=False)
         
-    # Set up an optimizer
-    optimizer = chainer.optimizers.MomentumSGD(lr=0.01, momentum=0.9)
+    # Set up optimizer
+    optimizer = chainer.optimizers.Adam()
     optimizer.setup(model)
         
-    # Set up a trainer                                       
+    # Set up trainer
     updater = training.StandardUpdater(train_iter, optimizer, device=args.gpu)
     trainer = training.Trainer(updater, (args.epoch, 'epoch'), args.out)
     
@@ -79,9 +74,9 @@ def train():
     trainer.extend(extensions.Evaluator(test_iter, eval_model, device=args.gpu))
     trainer.extend(extensions.LogReport())
     trainer.extend(extensions.PrintReport([
-        'epoch', 'iteration', 'main/loss', 'validation/main/loss',
+        'epoch', 'main/loss', 'validation/main/loss',
         'main/accuracy', 'validation/main/accuracy']))
-    trainer.extend(extensions.ProgressBar(update_interval=10))
+    trainer.extend(extensions.ProgressBar())
     
     # Get date and time
     date = datetime.datetime.today()
