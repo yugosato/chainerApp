@@ -9,7 +9,6 @@ import chainer
 from chainer import training
 from chainer.training import extensions
 from dataset import PreprocessedDataset
-from makefigure import logplot
 
 import mymodel
 import nin
@@ -20,7 +19,7 @@ import googlenet
 import deepface
 
 
-def train():    
+def train_model():    
     archs = {
         'mymodel': mymodel.MyModel,
         'nin': nin.NIN,
@@ -71,7 +70,7 @@ def train():
     test_iter = chainer.iterators.SerialIterator(test, args.test_batchsize, repeat=False, shuffle=False)
         
     # Set up optimizer
-    optimizer = chainer.optimizers.Adam()
+    optimizer = chainer.optimizers.AdaDelta()
     optimizer.setup(model)
         
     # Set up trainer
@@ -84,14 +83,17 @@ def train():
          
     trainer.extend(extensions.Evaluator(test_iter, eval_model, device=args.gpu))
     trainer.extend(extensions.LogReport())
+    trainer.extend(extensions.PlotReport([
+	'main/loss', 'validation/main/loss'], 'epoch', file_name='loss.png'))
+    trainer.extend(extensions.PlotReport([
+	'main/accuracy', 'validation/main/accuracy'], 'epoch', file_name='accuracy.png'))
     trainer.extend(extensions.PrintReport([
         'epoch', 'main/loss', 'validation/main/loss',
-        'main/accuracy', 'validation/main/accuracy']))
+        'main/accuracy', 'validation/main/accuracy', 'elapsed_time']))
     trainer.extend(extensions.ProgressBar())
     
-    # Get date and time
-    date = datetime.datetime.today()
-    
+    # Run trainer
+    date = datetime.datetime.today()    
     start_time = time.clock()
     trainer.run() 
     total_time = datetime.timedelta(seconds = time.clock() - start_time)
@@ -104,12 +106,11 @@ def train():
     chainer.serializers.save_npz(os.path.join(args.out, 'model_final_' + args.arch), model)
     print '----> done'
         
-    logplot(args.out)
     info = open(os.path.join(args.out, 'info'), 'a')
     info.write('Date: {}.\n'.format(date.strftime("%Y/%m/%d %H:%M:%S")))
     info.write('----> Total training time: {}.'.format(total_time))
     
 
 if __name__ == '__main__':
-    train()
+    train_model()
     
