@@ -1,7 +1,7 @@
 # chainerApp
-Programs using Chainer  
-* Python 2.7.13  
-* Chainer 1.24.0  
+Programs using Chainer
+* Python 2.7.13
+* Chainer 1.24.0 
 * CUDA 8.0
 * cuDNN 5.1
 
