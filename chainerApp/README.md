@@ -23,7 +23,7 @@ $ cp images.txt mean.npy chainerApp
 ```
 $ python trainmodel.py "images_train.txt" "images_test.txt"
 ```
-で学習開始（学習終了後、学習済みモデル・ログ・学習経過画像が出力される）
+で学習開始（学習終了後、学習済みモデル・ログが出力される）
 * オプション
 ```
 --help, -h
