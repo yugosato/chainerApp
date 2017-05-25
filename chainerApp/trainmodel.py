@@ -44,7 +44,9 @@ def train_model():
     parser.add_argument('--gpu', '-g', type=int, default=-1,
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--root', '-R', default='.',
-                        help='Root directory path of image files')  
+                        help='Root directory path of image files')
+    parser.add_argument('--mean', '-m', default='mean.npy',
+                        help='Mean file (computed by compute_mean.py)')	
     parser.add_argument('--out', '-o', default='result',
                         help='Output directory')
     args = parser.parse_args()    
@@ -62,8 +64,9 @@ def train_model():
         model.to_gpu()
         
     # Load datasets
-    train = PreprocessedDataset(args.train, args.root, model.insize)
-    test = PreprocessedDataset(args.test, args.root, model.insize)
+    mean = np.load(args.mean)
+    train = PreprocessedDataset(args.train, args.root, mean, model.insize)
+    test = PreprocessedDataset(args.test, args.root, mean, model.insize)
         
     # Set up iterator
     train_iter = chainer.iterators.SerialIterator(train, args.batchsize)

@@ -3,11 +3,13 @@
 #### 使用方法（準備）  
 ※ データセット画像はクラス毎にディレクトリに分けておく
 1. データセット画像パス・ラベルのリストを学習用と検証用それぞれ作成
+1. データセット平均画像を作成 (正規化用)
 1. 作業ディレクトリへコピー
 ```
 $ cd script
 $ python makelist.py "(学習/検証 画像フォルダへのパス)"
-$ cp images.txt chainerApp
+$ python compute_mean.py images.txt
+$ cp images.txt mean.npy chainerApp
 ```
 （リスト例） images.txt
 ```
@@ -30,7 +32,7 @@ $ python trainmodel.py "images_train.txt" "images_test.txt"
 --batchsize, -B       # ミニバッチサイズ 学習 (default=32)
 --test_batchsize, -b  # ミニバッチサイズ 検証 (default=250)
 --gpu, -g             # GPU (default=-1)
---mean, -m            # 平均画像 (default='mean.npy')
+--mean, -m            # 正規化用平均画像 (default='mean.npy')
 --root, -R            # データセットディレクトリ (default='.')  
 --out, -o             # 結果出力ディレクトリ (default='result')  
 ```

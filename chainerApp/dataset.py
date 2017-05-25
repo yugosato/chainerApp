@@ -8,8 +8,9 @@ import chainer
 
 class PreprocessedDataset(chainer.dataset.DatasetMixin):
     
-    def __init__(self, path, root, crop_size, random=False):
+    def __init__(self, path, root, mean, crop_size, random=False):
         self.base = chainer.datasets.LabeledImageDataset(path, root)
+        self.mean = mean.astype('f')
         self.crop_size = crop_size
         self.random = random
         
@@ -43,5 +44,6 @@ class PreprocessedDataset(chainer.dataset.DatasetMixin):
         right = left + crop_size
 
         image = image[:, top:bottom, left:right]
+        image -= self.mean[:, top:bottom, left:right]
         image /= 255
         return image, label
